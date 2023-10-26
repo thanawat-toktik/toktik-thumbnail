@@ -10,6 +10,7 @@ boto3 = "^1.28.70"
 celery = "^5.3.4"
 python-dotenv = "^1.0.0"
 opencv-python = "^4.8.1.78"
+redis = "^5.0.1"
 
 
 [build-system]
