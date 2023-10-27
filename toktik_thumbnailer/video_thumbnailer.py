@@ -13,12 +13,12 @@ def download_file_from_s3(client, object_name):
 
     download_target = Path(f"{temp_folder}/{file_name}.{file_extension}")
     client.download_file(
-        os.environ.get("S3_BUCKET_NAME_CONVERTED"), object_name, download_target
+        os.environ.get("S3_BUCKET_NAME_CONVERTED"), f"{file_name}.mp4", download_target
     )
     return download_target
 
 
-def extract_thumbnail(file_path: Path):
+def get_thumbnail(file_path: Path):
     cap = cv2.VideoCapture(file_path.__str__())
     if not cap.isOpened():
         print("Error opening video file")
@@ -40,7 +40,6 @@ def extract_thumbnail(file_path: Path):
     cv2.destroyAllWindows()
     
     os.remove(file_path) # remove mp4 file
-
     return Path(output_path)
 
 
@@ -72,7 +71,7 @@ if __name__ == "__main__":
     print("Done downloading")
     
     print("Start extracting frame")
-    result_path = extract_thumbnail(downloaded_path)
+    result_path = get_thumbnail(downloaded_path)
     print("Finished chunking")
     
     print("Start uploading")

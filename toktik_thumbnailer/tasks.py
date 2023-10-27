@@ -5,7 +5,7 @@ from botocore.config import Config
 from celery import Celery
 from dotenv import load_dotenv
 
-from toktik_thumbnailer.video_thumbnailer import download_file_from_s3, extract_thumbnail, upload_thumbnail_to_s3
+from toktik_thumbnailer.video_thumbnailer import download_file_from_s3, get_thumbnail, upload_thumbnail_to_s3
 
 
 def create_celery_app():
@@ -40,7 +40,7 @@ def extract_thumbnail(object_name):
 
     try:
         downloaded_file = download_file_from_s3(client, object_name)
-        thumbnail_path = extract_thumbnail(downloaded_file)
+        thumbnail_path = get_thumbnail(downloaded_file)
         return upload_thumbnail_to_s3(client, thumbnail_path)
     except Exception as e:
         print(e)
